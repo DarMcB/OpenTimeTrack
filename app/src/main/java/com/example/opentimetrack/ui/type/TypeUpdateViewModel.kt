@@ -1,0 +1,54 @@
+package com.example.opentimetrack.ui.type
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.opentimetrack.data.entity.Type
+import com.example.opentimetrack.data.repository.TimeRepository
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+
+class TypeUpdateViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val typeRepository: TimeRepository
+) : ViewModel() {
+    var typeUiState by mutableStateOf(TypeUiState())
+        private set
+
+    private val typeId: Int = checkNotNull(savedStateHandle[TypeUpdateDestination.typeIdArg])
+
+    init {
+        viewModelScope.launch {
+            typeUiState = typeRepository.getTypeStream(typeId)
+                .filterNotNull()
+                .first()
+                .toItemUiState(true)
+        }
+    }
+
+    suspend fun updateType() {
+        if (validateInput(uiState = typeUiState.typeDetails)) {
+            typeRepository.updateType(typeUiState.typeDetails)
+        }
+    }
+
+    suspend fun deleteType() {
+        typeRepository.deleteType(typeUiState.typeDetails)
+    }
+
+    fun updateUiState(typeDetails: Type) {
+        typeUiState = TypeUiState(typeDetails = typeDetails, isEntryValid = validateInput(typeDetails))
+    }
+
+
+
+    private fun validateInput(uiState: Type = typeUiState.typeDetails) : Boolean {
+        return with(uiState) {
+            name.isNotBlank()
+        }
+    }
+}
