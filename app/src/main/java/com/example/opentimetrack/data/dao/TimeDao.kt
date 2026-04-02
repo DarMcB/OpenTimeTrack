@@ -46,23 +46,26 @@ interface TimeDao {
     @Query("SELECT * FROM TimeInstance WHERE id = :timeInstanceId")
     fun getTimeInstance(timeInstanceId: Int): Flow<TimeInstance>
 
+    @Query("DELETE FROM TimeInstance WHERE typeId = :typeId")
+    suspend fun deleteTimeInstances(typeId: Int)
+
     //TimeInstanceAndTypeDao
     @Transaction
     @Query("SELECT * FROM TimeInstance WHERE typeId = :typeId ORDER BY date ASC")
     fun getAllTimeInstanceAndTypesDateAsc(typeId: Int): Flow<List<TimeInstance>>
 
-/*
-    @Transaction
-    @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY date DESC")
-    fun getAllTimeInstanceAndTypesDateDesc(typeId: Int): Flow<List<TimeInstanceAndType>>
+    /*
+        @Transaction
+        @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY date DESC")
+        fun getAllTimeInstanceAndTypesDateDesc(typeId: Int): Flow<List<TimeInstanceAndType>>
 
-    @Transaction
-    @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY time ASC")
-    fun getAllTimeInstanceAndTypesTimeAsc(typeId: Int): Flow<List<TimeInstanceAndType>>
+        @Transaction
+        @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY time ASC")
+        fun getAllTimeInstanceAndTypesTimeAsc(typeId: Int): Flow<List<TimeInstanceAndType>>
 
-    @Transaction
-    @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY time DESC")
-    fun getAllTimeInstanceAndTypesTimeDesc(typeId: Int): Flow<List<TimeInstanceAndType>>
+        @Transaction
+        @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY time DESC")
+        fun getAllTimeInstanceAndTypesTimeDesc(typeId: Int): Flow<List<TimeInstanceAndType>>
 
- */
+     */
 }

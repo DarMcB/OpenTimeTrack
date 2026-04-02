@@ -37,6 +37,7 @@ class TypeUpdateViewModel(
     }
 
     suspend fun deleteType() {
+        typeRepository.deleteTimeInstances(typeUiState.typeDetails.id)
         typeRepository.deleteType(typeUiState.typeDetails)
     }
 

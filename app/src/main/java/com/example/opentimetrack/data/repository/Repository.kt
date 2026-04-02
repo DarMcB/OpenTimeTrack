@@ -29,4 +29,6 @@ class TimeRepository(private val timeDao: TimeDao) {
     suspend fun updateTimeInstance(timeInstance: TimeInstance) = timeDao.updateTimeInstance(timeInstance)
 
     suspend fun deleteTimeInstance(timeInstance: TimeInstance) = timeDao.deleteTimeInstance(timeInstance)
+
+    suspend fun deleteTimeInstances(typeId: Int) = timeDao.deleteTimeInstances(typeId)
 }
