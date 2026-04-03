@@ -126,12 +126,6 @@ fun TypeEntryForm(
             singleLine = true,
             modifier = modifier.fillMaxWidth()
         )
-        if (enabled) {
-            Text(
-                text = stringResource(R.string.required_field),
-                modifier = Modifier.padding()
-            )
-        }
     }
 }
 

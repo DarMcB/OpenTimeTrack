@@ -8,12 +8,12 @@
     <string name="create_instance">Create</string>
     <string name="delete_instance">Delete</string>
     <string name="update_instance">Update</string>
-    <string name="no_types">Click \'+\' To Add A New Type</string>
+    <string name="no_types">Click + To Add A New Type</string>
     <string name="type_entry_title">Add Type</string>
-    <string name="time_instance_entry_title">Create New Instance</string>
+    <string name="time_instance_entry_title">Add Instance</string>
     <string name="time_instance_title">Time Instances</string>
     <string name="time_instance_update_title">Update Instance</string>
     <string name="no_time_instances">Click \'+\' To Add A New Instance</string>
     <string name="back_button">Back</string>
-    <string name="type_update_title">Update Instance</string>
+    <string name="type_update_title">Update Type</string>
 </resources>
