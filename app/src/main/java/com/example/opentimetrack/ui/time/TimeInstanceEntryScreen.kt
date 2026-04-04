@@ -64,9 +64,6 @@ fun TimeInstanceEntryScreen(
     val coroutineScope = rememberCoroutineScope()
 
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
         modifier = modifier.padding()
     ) {
         TimeInstanceEntryBody(
