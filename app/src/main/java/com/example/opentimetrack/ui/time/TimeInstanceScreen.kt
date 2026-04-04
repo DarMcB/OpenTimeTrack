@@ -23,6 +23,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.opentimetrack.R
 import com.example.opentimetrack.data.entity.TimeInstance
@@ -38,6 +43,7 @@ import com.example.opentimetrack.ui.AppTopBar
 import com.example.opentimetrack.ui.AppViewModelProvider
 import com.example.opentimetrack.ui.navigation.NavigationDestination
 import com.example.opentimetrack.ui.theme.OpenTimeTrackTheme
+import kotlinx.coroutines.launch
 
 object TimeInstanceDestination : NavigationDestination {
     override val route = "time_instance"
@@ -57,20 +63,24 @@ fun TimeInstanceScreen(
     viewModel: TimeInstanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val timeInstanceUiState by viewModel.timeInstanceUiState.collectAsState()
+    val typeUiState = viewModel.typeUiState
     val typeId = viewModel.typeId
+    val coroutineScope = rememberCoroutineScope()
+
+    var showTimeInstanceEntryScreen by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier,
         topBar = {
             AppTopBar(
-                title = stringResource(R.string.time_instance_title),
+                title = typeUiState.typeDetails.name,
                 canNavigateBack = true,
                 navigateUp = navigateBack
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navigateToTimeInstanceEntry(typeId) },
+                onClick = { showTimeInstanceEntryScreen = true },
                 shape = MaterialTheme.shapes.medium,
                 modifier = modifier.padding()
             ) {
@@ -81,6 +91,16 @@ fun TimeInstanceScreen(
             }
         },
     ) { innerPadding ->
+        if (showTimeInstanceEntryScreen) {
+            Dialog(
+                onDismissRequest = { showTimeInstanceEntryScreen = false }
+            ) {
+                TimeInstanceEntryScreen(
+                    navigateBack = {},
+                    onNavigateUp = {},
+                )
+            }
+        }
         TimeInstanceBody(
             timeInstanceList = timeInstanceUiState.timeInstanceList,
             onTimeInstanceClick = { navigateToTimeInstanceUpdate(it) },

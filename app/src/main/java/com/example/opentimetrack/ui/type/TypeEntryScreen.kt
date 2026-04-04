@@ -71,7 +71,7 @@ fun TypeEntryScreen(
             },
             buttonText = stringResource(R.string.create_instance),
             modifier = Modifier
-                .padding()
+                .padding(horizontal = 2.dp)
         )
     }
 }
@@ -86,20 +86,17 @@ fun TypeEntryBody(
 ) {
     Column(
         modifier = modifier.padding(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Spacer(
-            modifier = modifier.padding(4.dp)
+            modifier = modifier.padding(2.dp)
         )
         Text(
             text = stringResource(R.string.type_entry_title),
             fontSize = 20.sp,
 
             modifier = modifier
-                .align(Alignment.CenterHorizontally )
-        )
-        Spacer(
-            modifier = modifier.padding()
+                .align( Alignment.CenterHorizontally )
         )
         TypeEntryForm(
             type = typeUiState.typeDetails,

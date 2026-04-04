@@ -29,7 +29,7 @@ object AppViewModelProvider {
         initializer {
             TimeInstanceViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
-                timeInstanceRepository = timeApplication().container.typeRepository
+                timeRepository = timeApplication().container.typeRepository
             )
         }
         initializer {

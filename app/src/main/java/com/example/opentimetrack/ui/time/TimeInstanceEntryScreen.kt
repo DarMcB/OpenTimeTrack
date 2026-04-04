@@ -1,8 +1,10 @@
 package com.example.opentimetrack.ui.time
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -10,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,10 +33,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import com.example.opentimetrack.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.opentimetrack.ui.AppTopBar
@@ -57,16 +63,12 @@ fun TimeInstanceEntryScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            AppTopBar(
-                title = stringResource(R.string.time_instance_entry_title),
-                canNavigateBack = true,
-                navigateUp = onNavigateUp
-            )
-        },
-        modifier = modifier
-    ) { innerPadding ->
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        modifier = modifier.padding()
+    ) {
         TimeInstanceEntryBody(
             uiState = viewModel.uiState,
             onValueChange = viewModel::updateUiState,
@@ -74,12 +76,12 @@ fun TimeInstanceEntryScreen(
                 coroutineScope.launch {
                     viewModel.saveTimeInstance()
                     navigateBack
-                } },
+                }
+            },
             buttonText = stringResource(R.string.create_instance),
             modifier = modifier
-                .padding(innerPadding)
+                .padding(horizontal = 2.dp)
         )
-
     }
 }
 
@@ -94,6 +96,19 @@ fun TimeInstanceEntryBody(
     Column(
         modifier = modifier
     ) {
+        Spacer(
+            modifier = modifier.padding(4.dp)
+        )
+        Text(
+            text = stringResource(R.string.time_instance_entry_title),
+            fontSize = 20.sp,
+
+            modifier = modifier
+                .align( Alignment.CenterHorizontally )
+        )
+        Spacer(
+            modifier = modifier.padding(4.dp)
+        )
         TimeInstanceEntryForm(
             timeInstance = uiState.timeInstanceDetails,
             onValueChange = onValueChange,
@@ -103,7 +118,9 @@ fun TimeInstanceEntryBody(
             onClick = onSaveClick,
             enabled = uiState.isEntryValid,
             shape = MaterialTheme.shapes.small,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier
+                .padding(horizontal = 40.dp)
+                .align( Alignment.CenterHorizontally )
         ) {
             Text(
                 text = buttonText

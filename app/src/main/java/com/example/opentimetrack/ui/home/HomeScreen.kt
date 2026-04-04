@@ -151,7 +151,7 @@ fun HomeBody(
                 onTypeClick = { onTypeClick(it.id) },
                 onMenuClick = { onTypeLongClick(it.id) },
                 contentPadding = contentPadding,
-                modifier = modifier.padding(horizontal = 4.dp)
+                modifier = modifier.padding()
             )
         }
     }
