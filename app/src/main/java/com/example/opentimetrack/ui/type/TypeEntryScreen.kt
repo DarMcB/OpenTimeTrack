@@ -1,13 +1,17 @@
 package com.example.opentimetrack.ui.type
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -15,11 +19,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Popup
 import com.example.opentimetrack.data.entity.Type
 import com.example.opentimetrack.ui.theme.OpenTimeTrackTheme
 import com.example.opentimetrack.R
@@ -34,7 +43,6 @@ object TypeEntryDestination : NavigationDestination {
     override val titleRes = R.string.type_entry_title
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TypeEntryScreen(
@@ -46,33 +54,24 @@ fun TypeEntryScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            AppTopBar(
-                title = stringResource(R.string.type_entry_title),
-                canNavigateBack = canNavigateBack,
-                navigateUp = onNavigateUp
-            )
-        },
-        modifier = modifier.fillMaxSize()
-    ) { innerPadding ->
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        modifier = modifier.padding()
+    ) {
         TypeEntryBody(
             typeUiState = viewModel.typeUiState,
             onValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.saveItem()
-                    navigateBack
+                    navigateBack()
                 }
             },
             buttonText = stringResource(R.string.create_instance),
             modifier = Modifier
-                .padding(
-                    start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
-                    end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
-                    top = innerPadding.calculateTopPadding()
-                )
-                .fillMaxWidth()
+                .padding()
         )
     }
 }
@@ -87,18 +86,34 @@ fun TypeEntryBody(
 ) {
     Column(
         modifier = modifier.padding(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        Spacer(
+            modifier = modifier.padding(4.dp)
+        )
+        Text(
+            text = stringResource(R.string.type_entry_title),
+            fontSize = 20.sp,
+
+            modifier = modifier
+                .align(Alignment.CenterHorizontally )
+        )
+        Spacer(
+            modifier = modifier.padding()
+        )
         TypeEntryForm(
             type = typeUiState.typeDetails,
             onValueChange = onValueChange,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier.padding()
         )
         Button(
             onClick = onSaveClick,
             enabled = typeUiState.isEntryValid,
             shape = MaterialTheme.shapes.small,
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier
+                .padding()
+                .align( Alignment.CenterHorizontally )
+
         ) {
             Text(
                 text = buttonText
@@ -115,8 +130,7 @@ fun TypeEntryForm(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        modifier = modifier
     ) {
         OutlinedTextField(
             value = type.name,

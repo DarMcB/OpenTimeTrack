@@ -11,8 +11,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,17 +33,24 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.opentimetrack.data.entity.Type
 import com.example.opentimetrack.ui.AppViewModelProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.example.opentimetrack.R
+import com.example.opentimetrack.ui.AppBottomBar
 import com.example.opentimetrack.ui.AppTopBar
 import com.example.opentimetrack.ui.navigation.NavigationDestination
 import com.example.opentimetrack.ui.theme.OpenTimeTrackTheme
+import com.example.opentimetrack.ui.type.TypeEntryScreen
 import kotlin.Unit
 
 object HomeDestination : NavigationDestination {
@@ -60,6 +70,8 @@ fun HomeScreen(
     val homeUiState by viewModel.homeUiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
+    var showTypeEntryScreen by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -69,9 +81,19 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior
             )
         },
+        bottomBar = {
+            AppBottomBar(
+                leftButtonName = "list",
+                rightButtonName = "stats",
+                navigateToTimeInstance = { /* Already on this screen */ },
+                navigateToStatsScreen = { /*TODO*/ },
+                modifier = modifier
+            )
+
+        },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = navigateToTypeEntry,
+                onClick = { showTypeEntryScreen = true },
                 shape = MaterialTheme.shapes.medium,
                 modifier = modifier.padding()
             ) {
@@ -83,6 +105,16 @@ fun HomeScreen(
         },
 
     ) { innerPadding ->
+        if (showTypeEntryScreen) {
+            Dialog(
+                onDismissRequest = { showTypeEntryScreen = false }
+            ) {
+                TypeEntryScreen(
+                    navigateBack = {},
+                    onNavigateUp = {},
+                )
+            }
+        }
         HomeBody(
             typeList = homeUiState.typeList,
             onTypeClick = { navigateToTimeInstance(it) },
