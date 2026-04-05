@@ -1,9 +1,12 @@
 package com.example.opentimetrack.ui.time
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -14,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.opentimetrack.R
 import com.example.opentimetrack.ui.AppTopBar
@@ -21,32 +26,18 @@ import com.example.opentimetrack.ui.AppViewModelProvider
 import com.example.opentimetrack.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
-object TimeInstanceUpdateDestination : NavigationDestination {
-    override val route = "time_instance_update"
-    override val titleRes = R.string.time_instance_title
-    const val timeInstanceIdArg = "timeInstanceId"
-    val routeArg = "$route/{$timeInstanceIdArg}"
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimeInstanceUpdateScreen(
-    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TimeInstanceUpdateViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    timeInstanceId: Int,
 ) {
+    val viewModel: TimeInstanceUpdateViewModel = viewModel(factory = TimeInstanceUpdateViewModel.factory(timeInstanceId))
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            AppTopBar(
-                title = stringResource(R.string.time_instance_update_title),
-                canNavigateBack = true,
-                navigateUp = onNavigateUp
-            )
-        },
-        modifier = modifier
-    ) { innerPadding ->
+    Card(
+        modifier = modifier.padding()
+    ) {
         TimeInstanceUpdateBody(
             onSaveClick = { coroutineScope.launch {
                 viewModel.updateTimeInstance()
@@ -54,7 +45,7 @@ fun TimeInstanceUpdateScreen(
             onDeleteClick = { coroutineScope.launch {
                 viewModel.deleteTimeInstance()
             }},
-            modifier = modifier.padding(innerPadding),
+            modifier = modifier.padding(),
             uiState = viewModel.uiState,
             onValueChange = viewModel::updateUiState
         )
@@ -70,38 +61,63 @@ fun TimeInstanceUpdateBody(
     onValueChange: (TimeInstanceDetails) -> Unit
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
     ) {
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.End
+        Spacer(
+            modifier = modifier.padding(4.dp)
+        )
+        Text(
+            text = stringResource(R.string.time_instance_update_title),
+            fontSize = 20.sp,
+
+            modifier = modifier
+                .align( Alignment.CenterHorizontally )
+        )
+        Spacer(
+            modifier = modifier.padding(4.dp)
+        )
+        TimeInstanceEntryForm(
+            timeInstance = uiState.timeInstanceDetails,
+            onValueChange = onValueChange,
+            modifier = modifier.padding(bottom = 4.dp)
+        )
+        Row(
+            modifier = modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = onDeleteClick,
-                enabled = true,
+                onClick = onSaveClick,
+                enabled = uiState.isEntryValid,
                 shape = MaterialTheme.shapes.small,
-                modifier = modifier.padding()
+                modifier = modifier
+                    .padding()
+            ) {
+                Text(
+                    text = stringResource(R.string.update_instance)
+                )
+            }
+            Spacer(modifier.weight(1f))
+            Button(
+                onClick = onDeleteClick,
+                enabled = uiState.isEntryValid,
+                shape = MaterialTheme.shapes.small,
+                modifier = modifier
+                    .padding()
             ) {
                 Text(
                     text = stringResource(R.string.delete_instance)
                 )
             }
         }
-        TimeInstanceEntryBody(
-            uiState = uiState,
-            onValueChange = onValueChange,
-            onSaveClick = onSaveClick,
-            buttonText = stringResource(R.string.update_instance),
-            modifier = Modifier
-                .padding()
-        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TimeInstanceUpdateBodyPreview() {
-    TimeInstanceEntryForm(
-        timeInstance =  TimeInstanceDetails(0,0, "1751927498270", "43")
+    TimeInstanceUpdateBody(
+        onSaveClick = {},
+        onDeleteClick = {},
+        onValueChange = {},
+        uiState = TimeInstanceUiState()
     )
 }

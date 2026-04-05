@@ -37,8 +37,6 @@ class TypeUpdateViewModel(
         }
     }
 
-    var typeId: Int = 0
-
     init {
         viewModelScope.launch {
             typeUiState = typeRepository.getTypeStream(typeId)
@@ -62,8 +60,6 @@ class TypeUpdateViewModel(
     fun updateUiState(typeDetails: Type) {
         typeUiState = TypeUiState(typeDetails = typeDetails, isEntryValid = validateInput(typeDetails))
     }
-
-
 
     private fun validateInput(uiState: Type = typeUiState.typeDetails) : Boolean {
         return with(uiState) {

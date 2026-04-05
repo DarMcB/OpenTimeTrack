@@ -136,7 +136,6 @@ fun HomeScreen(
             onTypeLongClick = {
                 showTypeUpdateScreen = true
                 typeId = it
-
             },
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding

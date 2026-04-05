@@ -33,12 +33,6 @@ object AppViewModelProvider {
                 timeRepository = timeApplication().container.typeRepository
             )
         }
-        initializer {
-            TimeInstanceUpdateViewModel(
-                savedStateHandle = this.createSavedStateHandle(),
-                repository = timeApplication().container.typeRepository
-            )
-        }
     }
 }
 

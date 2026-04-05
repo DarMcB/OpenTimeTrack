@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,8 +58,6 @@ object TimeInstanceDestination : NavigationDestination {
 @Composable
 fun TimeInstanceScreen(
     navigateBack: () -> Unit,
-    navigateToTimeInstanceEntry: (Int) -> Unit,
-    navigateToTimeInstanceUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TimeInstanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -68,6 +67,9 @@ fun TimeInstanceScreen(
     val coroutineScope = rememberCoroutineScope()
 
     var showTimeInstanceEntryScreen by remember { mutableStateOf(false) }
+    var showTimeInstanceUpdateScreen by remember { mutableStateOf(false) }
+
+    var timeInstanceId: Int = 0
 
     Scaffold(
         modifier = modifier,
@@ -101,9 +103,23 @@ fun TimeInstanceScreen(
                 )
             }
         }
+        if (showTimeInstanceUpdateScreen) {
+                Dialog(
+                    onDismissRequest = {
+                        showTimeInstanceUpdateScreen = false
+                    }
+                ) {
+                    TimeInstanceUpdateScreen(
+                        timeInstanceId = timeInstanceId,
+                    )
+                }
+        }
         TimeInstanceBody(
             timeInstanceList = timeInstanceUiState.timeInstanceList,
-            onTimeInstanceClick = { navigateToTimeInstanceUpdate(it) },
+            onTimeInstanceClick = {
+                showTimeInstanceUpdateScreen = true
+                timeInstanceId = it
+            },
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding
         )

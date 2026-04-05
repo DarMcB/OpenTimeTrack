@@ -13,7 +13,6 @@ import com.example.opentimetrack.ui.time.TimeInstanceDestination
 import com.example.opentimetrack.ui.time.TimeInstanceEntryDestination
 import com.example.opentimetrack.ui.time.TimeInstanceEntryScreen
 import com.example.opentimetrack.ui.time.TimeInstanceScreen
-import com.example.opentimetrack.ui.time.TimeInstanceUpdateDestination
 import com.example.opentimetrack.ui.time.TimeInstanceUpdateScreen
 import com.example.opentimetrack.ui.type.TypeEntryDestination
 import com.example.opentimetrack.ui.type.TypeEntryScreen
@@ -45,8 +44,6 @@ fun TimeNavHost(
         ) {
             TimeInstanceScreen(
                 navigateBack = { navController.popBackStack() },
-                navigateToTimeInstanceEntry = { navController.navigate("${TimeInstanceEntryDestination.route}/${it}") },
-                navigateToTimeInstanceUpdate = { navController.navigate("${TimeInstanceUpdateDestination.route}/${it}")},
             )
         }
     }
