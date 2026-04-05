@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.opentimetrack.data.entity.Type
 import com.example.opentimetrack.ui.AppViewModelProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -51,6 +52,7 @@ import com.example.opentimetrack.ui.AppTopBar
 import com.example.opentimetrack.ui.navigation.NavigationDestination
 import com.example.opentimetrack.ui.theme.OpenTimeTrackTheme
 import com.example.opentimetrack.ui.type.TypeEntryScreen
+import com.example.opentimetrack.ui.type.TypeUpdateScreen
 import kotlin.Unit
 
 object HomeDestination : NavigationDestination {
@@ -71,6 +73,9 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     var showTypeEntryScreen by remember { mutableStateOf(false) }
+    var showTypeUpdateScreen by remember { mutableStateOf(false) }
+
+    var typeId by remember { mutableIntStateOf(0) }
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -115,10 +120,24 @@ fun HomeScreen(
                 )
             }
         }
+        if (showTypeUpdateScreen) {
+            Dialog(
+                onDismissRequest = { showTypeUpdateScreen = false }
+            ) {
+                TypeUpdateScreen(
+                    onNavigateUp = {},
+                    typeId = typeId
+                )
+            }
+        }
         HomeBody(
             typeList = homeUiState.typeList,
             onTypeClick = { navigateToTimeInstance(it) },
-            onTypeLongClick = { navigateToTypeUpdate(it) },
+            onTypeLongClick = {
+                showTypeUpdateScreen = true
+                typeId = it
+
+            },
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding
         )

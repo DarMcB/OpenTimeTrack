@@ -1,5 +1,6 @@
 package com.example.opentimetrack.ui
 
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -19,12 +20,6 @@ object AppViewModelProvider {
         }
         initializer {
             TypeEntryViewModel(timeApplication().container.typeRepository)
-        }
-        initializer {
-            TypeUpdateViewModel(
-                this.createSavedStateHandle(),
-                timeApplication().container.typeRepository
-            )
         }
         initializer {
             TimeInstanceViewModel(

@@ -37,22 +37,6 @@ fun TimeNavHost(
                 navigateToTimeInstance = { navController.navigate("${TimeInstanceDestination.route}/${it}") }
             )
         }
-        composable(route = TypeEntryDestination.route) {
-            TypeEntryScreen(
-                navigateBack = { navController.popBackStack() },
-                onNavigateUp = { navController.navigateUp() }
-            )
-        }
-        composable(
-            route = TypeUpdateDestination.routeArg,
-            arguments = listOf(navArgument(TypeUpdateDestination.typeIdArg) {
-                type = NavType.IntType
-            })
-        ) {
-            TypeUpdateScreen(
-               onNavigateUp = { navController.navigateUp() }
-            )
-        }
         composable(
             route = TimeInstanceDestination.routeArg,
             arguments = listOf(navArgument(TimeInstanceDestination.typeIdArg) {
@@ -63,27 +47,6 @@ fun TimeNavHost(
                 navigateBack = { navController.popBackStack() },
                 navigateToTimeInstanceEntry = { navController.navigate("${TimeInstanceEntryDestination.route}/${it}") },
                 navigateToTimeInstanceUpdate = { navController.navigate("${TimeInstanceUpdateDestination.route}/${it}")},
-            )
-        }
-        composable(
-            route = TimeInstanceEntryDestination.routeArg,
-            arguments = listOf(navArgument(TimeInstanceEntryDestination.typeIdArg) {
-                type = NavType.IntType
-            })
-        ) {
-            TimeInstanceEntryScreen(
-                navigateBack = { navController.popBackStack() },
-                onNavigateUp = { navController.navigateUp() }
-            )
-        }
-        composable(
-            route = TimeInstanceUpdateDestination.routeArg,
-            arguments = listOf(navArgument(TimeInstanceUpdateDestination.timeInstanceIdArg) {
-                type = NavType.IntType
-            })
-        ) {
-            TimeInstanceUpdateScreen(
-                onNavigateUp = { navController.navigateUp() },
             )
         }
     }

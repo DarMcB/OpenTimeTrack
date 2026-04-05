@@ -67,6 +67,7 @@ fun TypeEntryScreen(
                 }
             },
             buttonText = stringResource(R.string.create_instance),
+            title = stringResource(R.string.type_entry_title),
             modifier = Modifier
                 .padding(horizontal = 2.dp)
         )
@@ -78,6 +79,7 @@ fun TypeEntryBody(
     typeUiState: TypeUiState,
     onValueChange: (Type) -> Unit,
     onSaveClick: () -> Unit,
+    title: String,
     buttonText: String,
     modifier: Modifier = Modifier
 ) {
@@ -89,9 +91,8 @@ fun TypeEntryBody(
             modifier = modifier.padding(2.dp)
         )
         Text(
-            text = stringResource(R.string.type_entry_title),
+            text = title,
             fontSize = 20.sp,
-
             modifier = modifier
                 .align( Alignment.CenterHorizontally )
         )
@@ -157,6 +158,7 @@ fun TypeEntryBodyPreview() {
             onSaveClick = {},
             onValueChange = {},
             buttonText = stringResource(R.string.create_instance),
+            title = stringResource(R.string.type_entry_title),
             typeUiState = TypeUiState()
         )
     }
