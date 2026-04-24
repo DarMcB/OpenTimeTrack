@@ -63,13 +63,12 @@ fun TimeInstanceScreen(
 ) {
     val timeInstanceUiState by viewModel.timeInstanceUiState.collectAsState()
     val typeUiState = viewModel.typeUiState
-    val typeId = viewModel.typeId
     val coroutineScope = rememberCoroutineScope()
 
     var showTimeInstanceEntryScreen by remember { mutableStateOf(false) }
     var showTimeInstanceUpdateScreen by remember { mutableStateOf(false) }
 
-    var timeInstanceId: Int = 0
+    var timeInstanceId by remember { mutableIntStateOf(0) }
 
     Scaffold(
         modifier = modifier,

@@ -38,6 +38,10 @@ class TimeInstanceUpdateViewModel(
     }
 
     init {
+        load(timeInstanceId)
+    }
+
+    fun load(timeInstanceId: Int) {
         viewModelScope.launch {
             uiState = repository.getTimeInstanceStream(timeInstanceId)
                 .filterNotNull()
@@ -68,5 +72,6 @@ class TimeInstanceUpdateViewModel(
             date.isNotBlank() && time.isNotBlank()
         }
     }
+
 
 }

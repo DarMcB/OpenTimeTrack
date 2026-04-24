@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +35,10 @@ fun TimeInstanceUpdateScreen(
 ) {
     val viewModel: TimeInstanceUpdateViewModel = viewModel(factory = TimeInstanceUpdateViewModel.factory(timeInstanceId))
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(timeInstanceId) {
+        viewModel.load(timeInstanceId)
+    }
 
     Card(
         modifier = modifier.padding()
