@@ -38,6 +38,10 @@ class TypeUpdateViewModel(
     }
 
     init {
+        load(typeId)
+    }
+
+    fun load(typeId: Int) {
         viewModelScope.launch {
             typeUiState = typeRepository.getTypeStream(typeId)
                 .filterNotNull()
