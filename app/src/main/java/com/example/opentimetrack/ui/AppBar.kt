@@ -1,12 +1,15 @@
 package com.example.opentimetrack.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.AutoMirrored.Filled
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
@@ -19,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,28 +86,43 @@ fun AppBottomBar(
     modifier: Modifier = Modifier
 ) {
     BottomAppBar(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier,
     ) {
-        IconButton(
-            onClick = { navigateToTimeInstance },
-            modifier = modifier.padding(horizontal = 60.dp)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.padding(start = 80.dp)
         ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.List,
-                contentDescription = "",
-                modifier = modifier.fillMaxSize()
-            )
+            IconButton(
+                onClick = { navigateToTimeInstance },
+                modifier = modifier.padding()
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.List,
+                    contentDescription = "",
+                    modifier = modifier.fillMaxSize()
+                )
+            }
+            Text(leftButtonName)
         }
-        Spacer(Modifier.weight(1f))
-        IconButton(
-            onClick = { navigateToStatsScreen },
-            modifier = modifier.padding(horizontal = 60.dp)
+        Spacer(
+            modifier = modifier.weight(1f)
+        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.padding(end = 80.dp)
         ) {
-            Icon(
-                imageVector = Icons.Default.Info,
-                contentDescription = "",
-                modifier = modifier.fillMaxSize()
-            )
+            IconButton(
+                onClick = { navigateToStatsScreen },
+                modifier = modifier
+                    .padding()
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "",
+                    modifier = modifier.fillMaxSize()
+                )
+            }
+            Text(rightButtonName)
         }
     }
 }

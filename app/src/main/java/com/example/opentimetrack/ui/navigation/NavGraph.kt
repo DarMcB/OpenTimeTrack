@@ -44,6 +44,7 @@ fun TimeNavHost(
         ) {
             TimeInstanceScreen(
                 navigateBack = { navController.popBackStack() },
+                navigateToStatsScreen = { /*TODO*/ }
             )
         }
     }

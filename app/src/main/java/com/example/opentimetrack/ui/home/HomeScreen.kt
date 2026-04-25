@@ -89,8 +89,8 @@ fun HomeScreen(
         },
         bottomBar = {
             AppBottomBar(
-                leftButtonName = "list",
-                rightButtonName = "stats",
+                leftButtonName = stringResource(R.string.list),
+                rightButtonName = stringResource(R.string.stats),
                 navigateToTimeInstance = { /* Already on this screen */ },
                 navigateToStatsScreen = { /*TODO*/ },
                 modifier = modifier

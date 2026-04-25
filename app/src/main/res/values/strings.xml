@@ -16,4 +16,6 @@
     <string name="no_time_instances">Click \'+\' To Add A New Instance</string>
     <string name="back_button">Back</string>
     <string name="type_update_title">Update Type</string>
+    <string name="list">List</string>
+    <string name="stats">Stats</string>
 </resources>

@@ -40,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.opentimetrack.R
 import com.example.opentimetrack.data.entity.TimeInstance
 import com.example.opentimetrack.data.entity.Type
+import com.example.opentimetrack.ui.AppBottomBar
 import com.example.opentimetrack.ui.AppTopBar
 import com.example.opentimetrack.ui.AppViewModelProvider
 import com.example.opentimetrack.ui.navigation.NavigationDestination
@@ -58,6 +59,7 @@ object TimeInstanceDestination : NavigationDestination {
 @Composable
 fun TimeInstanceScreen(
     navigateBack: () -> Unit,
+    navigateToStatsScreen: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TimeInstanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -79,6 +81,14 @@ fun TimeInstanceScreen(
                 canNavigateCustom = true,
                 navigateUp = navigateBack,
                 navigateToCustom = {}
+            )
+        },
+        bottomBar = {
+            AppBottomBar(
+                leftButtonName = stringResource(R.string.list),
+                rightButtonName = stringResource(R.string.stats),
+                navigateToTimeInstance = { /* Already on this screen */ },
+                navigateToStatsScreen = { navigateToStatsScreen(viewModel.typeId) }
             )
         },
         floatingActionButton = {
