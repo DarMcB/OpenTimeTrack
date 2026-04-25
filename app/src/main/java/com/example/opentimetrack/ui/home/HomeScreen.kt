@@ -83,6 +83,7 @@ fun HomeScreen(
             AppTopBar(
                 title = stringResource(R.string.app_name),
                 canNavigateBack = false,
+                canNavigateCustom = false,
                 scrollBehavior = scrollBehavior
             )
         },

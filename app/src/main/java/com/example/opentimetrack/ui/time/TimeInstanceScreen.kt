@@ -76,7 +76,9 @@ fun TimeInstanceScreen(
             AppTopBar(
                 title = typeUiState.typeDetails.name,
                 canNavigateBack = true,
-                navigateUp = navigateBack
+                canNavigateCustom = true,
+                navigateUp = navigateBack,
+                navigateToCustom = {}
             )
         },
         floatingActionButton = {

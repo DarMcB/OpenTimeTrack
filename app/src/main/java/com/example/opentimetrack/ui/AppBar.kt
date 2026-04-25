@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons.AutoMirrored.Filled
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,8 +40,10 @@ fun App(navController: NavHostController = rememberNavController()) {
 fun AppTopBar(
     title: String,
     canNavigateBack: Boolean,
+    canNavigateCustom: Boolean,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     navigateUp: () -> Unit = {},
+    navigateToCustom: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
@@ -53,6 +56,16 @@ fun AppTopBar(
                     Icon(
                         imageVector = Filled.ArrowBack,
                         contentDescription = stringResource(R.string.back_button)
+                    )
+                }
+            }
+        },
+        actions = {
+            if (canNavigateCustom) {
+                IconButton(onClick = navigateToCustom) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = ""
                     )
                 }
             }
@@ -102,7 +115,8 @@ fun AppTopBarPreview() {
     OpenTimeTrackTheme {
         AppTopBar(
             title = "App Title",
-            canNavigateBack = false
+            canNavigateBack = false,
+            canNavigateCustom = true
         )
     }
 }
