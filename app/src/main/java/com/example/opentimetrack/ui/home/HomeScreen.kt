@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalContext
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -63,8 +64,6 @@ object HomeDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigateToTypeEntry: () -> Unit,
-    navigateToTypeUpdate: (Int) -> Unit,
     navigateToTimeInstance: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -84,7 +83,8 @@ fun HomeScreen(
                 title = stringResource(R.string.app_name),
                 canNavigateBack = false,
                 canNavigateCustom = false,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                navigateToCustom = { /*TODO: Settings page for all types*/ },
             )
         },
         bottomBar = {

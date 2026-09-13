@@ -65,4 +65,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.1")
 
     implementation("androidx.navigation:navigation-compose:2.8.5")
+    implementation("com.jsoizo:kotlin-csv-jvm:1.10.0")
+    implementation("androidx.activity:activity-compose:1.9.0")
+
+
 }

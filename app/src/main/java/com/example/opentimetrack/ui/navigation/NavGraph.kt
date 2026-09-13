@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.opentimetrack.ui.home.HomeDestination
 import com.example.opentimetrack.ui.home.HomeScreen
+import com.example.opentimetrack.ui.settings.SettingsScreen
+import com.example.opentimetrack.ui.settings.SettingsScreenDestination
 import com.example.opentimetrack.ui.time.TimeInstanceDestination
 import com.example.opentimetrack.ui.time.TimeInstanceEntryDestination
 import com.example.opentimetrack.ui.time.TimeInstanceEntryScreen
@@ -31,8 +33,6 @@ fun TimeNavHost(
     ) {
         composable(route = HomeDestination.route) {
             HomeScreen(
-                navigateToTypeEntry = { navController.navigate(TypeEntryDestination.route) },
-                navigateToTypeUpdate = { navController.navigate("${TypeUpdateDestination.route}/${it}") },
                 navigateToTimeInstance = { navController.navigate("${TimeInstanceDestination.route}/${it}") }
             )
         }
@@ -44,7 +44,18 @@ fun TimeNavHost(
         ) {
             TimeInstanceScreen(
                 navigateBack = { navController.popBackStack() },
-                navigateToStatsScreen = { /*TODO*/ }
+                navigateToStatsScreen = { /*TODO*/ },
+                navigateToSettingsScreen = { navController.navigate("${SettingsScreenDestination.route}/${it}")}
+            )
+        }
+        composable(
+            route = SettingsScreenDestination.routeArg,
+            arguments = listOf(navArgument(SettingsScreenDestination.typeIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            SettingsScreen(
+                navigateBack = { navController.popBackStack() }
             )
         }
     }
