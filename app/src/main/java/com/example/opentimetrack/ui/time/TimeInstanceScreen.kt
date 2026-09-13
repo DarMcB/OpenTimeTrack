@@ -60,7 +60,6 @@ object TimeInstanceDestination : NavigationDestination {
 fun TimeInstanceScreen(
     navigateBack: () -> Unit,
     navigateToStatsScreen: (Int) -> Unit,
-    navigateToSettingsScreen: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TimeInstanceViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -81,7 +80,7 @@ fun TimeInstanceScreen(
                 canNavigateBack = true,
                 canNavigateCustom = true,
                 navigateUp = navigateBack,
-                navigateToCustom = { navigateToSettingsScreen(viewModel.typeId) }
+                navigateToCustom = {}
             )
         },
         bottomBar = {

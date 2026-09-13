@@ -47,7 +47,7 @@ fun AppTopBar(
     canNavigateCustom: Boolean,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     navigateUp: () -> Unit = {},
-    navigateToCustom: (Int) -> Unit,
+    navigateToCustom: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
@@ -66,7 +66,7 @@ fun AppTopBar(
         },
         actions = {
             if (canNavigateCustom) {
-                IconButton(onClick = { navigateToCustom(0) }) {
+                IconButton(onClick = navigateToCustom) {
                     Icon(
                         imageVector = Icons.Default.Settings,
                         contentDescription = ""
@@ -135,8 +135,7 @@ fun AppTopBarPreview() {
         AppTopBar(
             title = "App Title",
             canNavigateBack = false,
-            canNavigateCustom = true,
-            navigateToCustom = {}
+            canNavigateCustom = true
         )
     }
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.opentimetrack.ui.home.HomeViewModel
-import com.example.opentimetrack.ui.settings.SettingsViewModel
 import com.example.opentimetrack.ui.time.TimeInstanceEntryViewModel
 import com.example.opentimetrack.ui.time.TimeInstanceUpdateViewModel
 import com.example.opentimetrack.ui.time.TimeInstanceViewModel
@@ -30,12 +29,6 @@ object AppViewModelProvider {
         }
         initializer {
             TimeInstanceEntryViewModel(
-                savedStateHandle = this.createSavedStateHandle(),
-                timeRepository = timeApplication().container.typeRepository
-            )
-        }
-        initializer {
-            SettingsViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
                 timeRepository = timeApplication().container.typeRepository
             )
