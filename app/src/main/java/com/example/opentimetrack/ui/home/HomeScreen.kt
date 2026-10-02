@@ -146,7 +146,7 @@ fun HomeScreen(
 
 @Composable
 fun HomeBody(
-    typeList: List<Type>,
+    typeList: List<TypeWithTotalTime>,
     onTypeClick: (Int) -> Unit,
     onTypeLongClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -178,7 +178,7 @@ fun HomeBody(
 
 @Composable
 fun TypeList(
-    typeList: List<Type>,
+    typeList: List<TypeWithTotalTime>,
     onTypeClick: (Type) -> Unit,
     onMenuClick: (Type) -> Unit,
     contentPadding: PaddingValues,
@@ -190,10 +190,11 @@ fun TypeList(
     ) {
         items(
             items = typeList,
-            key = { it.id }
-        ) { type ->
+            key = { it.type.id }
+        ) { typeList ->
             TypeItem(
-                type = type,
+                type = typeList.type,
+                totalTime = typeList.timeInHours(),
                 onTypeClick = onTypeClick,
                 onMenuClick = onMenuClick,
                 modifier = Modifier
@@ -206,6 +207,7 @@ fun TypeList(
 @Composable
 fun TypeItem(
     type: Type,
+    totalTime: String,
     onTypeClick: (Type) -> Unit,
     onMenuClick: (Type) -> Unit,
     modifier: Modifier = Modifier
@@ -231,14 +233,14 @@ fun TypeItem(
                     .weight(1f)
                     .padding(start = 8.dp)
             )
-            /*TODO "Total Time Value" here (text)
-            Text(
-                text = ,
-                textAlign = TextAlign.Center,
-                fontSize = 32.sp,
-                modifier = modifier
-            )
-            */
+            if (totalTime != "0.0") {
+                Text(
+                    text = totalTime + "h",
+                    textAlign = TextAlign.Center,
+                    fontSize = 32.sp,
+                    modifier = modifier
+                )
+            }
             IconButton(
                 onClick = { onMenuClick(type) },
                 modifier = modifier.padding(),
@@ -256,7 +258,7 @@ fun TypeItem(
 @Composable
 fun TypeItemPreview() {
     OpenTimeTrackTheme {
-        TypeItem(Type(1, "Reading"), onTypeClick = {}, onMenuClick = {})
+        TypeItem(Type(1, "Reading"), totalTime = "", onTypeClick = {}, onMenuClick = {})
     }
 }
 
@@ -266,8 +268,8 @@ fun TypeListPreview() {
     OpenTimeTrackTheme {
         TypeList(
             typeList = listOf(
-                Type(0, "Spanish"),
-                Type(1, "Study")
+                TypeWithTotalTime(Type(0, "Spanish"), 328),
+                TypeWithTotalTime(Type(1, "Study"), 234)
             ),
             onTypeClick = {},
             onMenuClick = {},
@@ -282,9 +284,9 @@ fun HomeBodyPreview() {
     OpenTimeTrackTheme {
         HomeBody(
             typeList = listOf(
-                Type(1, "Japanese"),
-                Type(2, "French"),
-                Type(3, "Study")
+                TypeWithTotalTime(Type(1, "Japanese"), 1000),
+                TypeWithTotalTime(Type(2, "French"), 834),
+                TypeWithTotalTime(Type(3, "Study"), 1532)
             ),
             onTypeClick = {},
             onTypeLongClick = {}

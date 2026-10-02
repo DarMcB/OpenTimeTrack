@@ -13,7 +13,16 @@ class HomeViewModel(
     typeRepository: TimeRepository,
 ) : ViewModel() {
     val homeUiState: StateFlow<HomeUiState> =
-        typeRepository.getAllTypesStream().map { HomeUiState(it) }
+        typeRepository.getAllTypesStream().map { types ->
+            HomeUiState(
+                typeList = types.map { type ->
+                    TypeWithTotalTime(
+                        type = type,
+                        totalTime = typeRepository.getTypeTimeSum(type)
+                    )
+                }
+            )
+        }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000L),
@@ -21,6 +30,15 @@ class HomeViewModel(
             )
 }
 
+class TypeWithTotalTime(
+    val type: Type,
+    val totalTime: Int
+) {
+    fun timeInHours(): String {
+        return "%.1f".format(totalTime / 60.0)
+    }
+}
+
 data class HomeUiState(
-    val typeList: List<Type> = listOf()
+    val typeList: List<TypeWithTotalTime> = listOf()
 )

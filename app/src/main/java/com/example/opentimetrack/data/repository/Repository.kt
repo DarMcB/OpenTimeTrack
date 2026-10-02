@@ -19,6 +19,8 @@ class TimeRepository(private val timeDao: TimeDao) {
 
     suspend fun deleteType(type: Type) = timeDao.deleteType(type)
 
+    suspend fun getTypeTimeSum(type: Type) = timeDao.getTypeTimeSum(type.id)
+
     //Time Instances
     fun getAllTimeInstancesStream(typeId: Int): Flow<List<TimeInstance>> = timeDao.getAllTimeInstanceAndTypesDateAsc(typeId)
 

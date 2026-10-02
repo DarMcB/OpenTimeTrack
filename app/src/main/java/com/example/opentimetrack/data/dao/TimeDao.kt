@@ -54,6 +54,9 @@ interface TimeDao {
     @Query("SELECT * FROM TimeInstance WHERE typeId = :typeId ORDER BY date ASC")
     fun getAllTimeInstanceAndTypesDateAsc(typeId: Int): Flow<List<TimeInstance>>
 
+    @Query("SELECT COALESCE(SUM(time), 0) FROM TimeInstance WHERE typeId = :id")
+    suspend fun getTypeTimeSum(id: Int): Int
+
     /*
         @Transaction
         @Query("SELECT * FROM TimeInstanceAndType WHERE typeId = :typeId ORDER BY date DESC")
