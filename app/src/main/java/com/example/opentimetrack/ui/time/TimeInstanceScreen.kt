@@ -201,12 +201,16 @@ fun TimeInstanceItem(
             Row(modifier = modifier) {
                 Text(
                     text = convertMillisToDate(timeInstance.date.toString()),
-                    fontSize = 32.sp
+                    fontSize = 32.sp,
+                    modifier = modifier.padding(start = 40.dp)
                 )
-                Spacer(Modifier.weight(1f))
                 Text(
-                    text = timeInstance.time.toString(),
-                    fontSize = 32.sp
+                    text = timeInstance.time.toString() + "m",
+                    fontSize = 32.sp,
+                    textAlign = TextAlign.End,
+                    modifier = modifier
+                        .padding(end = 20.dp)
+                        .fillMaxWidth(),
                 )
             }
         }
